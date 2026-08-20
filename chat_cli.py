@@ -95,7 +95,7 @@ def save_history(messages):
 def main():
     """主程序：循环等待输入 → 调 API → 打印回复。"""
     print("=" * 50)
-    print("DeepSeek 命令行对话程序已启动")
+    print("这里是DEEPSEEK")
     print("输入内容开始对话；输入 /help 查看命令；输入 /exit 退出")
     print("=" * 50)
 
@@ -138,9 +138,15 @@ def main():
             messages.append(
                 {"role": "user", "content": f"{task}\n请只输出 JSON，不要任何其他文字。"}
             )
+        elif user_input.startswith("/status"):
+            msg_count = len(messages)          # 总条数（含系统提示词）
+            round_count = (msg_count - 1) // 2 # 你问了几轮 = (总条数-1) ÷ 2
+            print(f"当前对话共有 {msg_count} 条消息（含系统提示词）。")
+            print(f"你问了 {round_count} 轮问题。")
+            continue
         elif user_input == "/help":
             print("命令列表：/exit 退出 | /save 保存 | /clear 清空 | "
-                  "/system 内容 换提示词 | /json 内容 要求JSON输出")
+                  "/system 内容 换提示词 | /json 内容 要求JSON输出| /status 共有几条消息 ")
             continue
         else:
             messages.append({"role": "user", "content": user_input})
